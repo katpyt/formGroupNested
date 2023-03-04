@@ -1,0 +1,180 @@
+<form [formGroup]="orderForm"
+      (ngSubmit)="onOrderFormSubmitted(orderForm)">
+    <div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a product</mat-label>
+            <mat-select formControlName="product"
+                        placeholder="Product"
+                        required>
+                <ng-container *ngFor="let product of productList$ | async">
+                    <mat-option [value]="product.name">
+                        {{product.name}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+            <mat-error *ngIf="orderForm.get('product')!.invalid">product is invalid</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <label>Quantity</label>
+        <ng-container>
+            <mat-form-field appearance="fill">
+                <mat-label>Quantity2</mat-label>
+                <mat-radio-group formControlName="quantity"
+                                 *ngFor="let quantity of quantityList$ | async">
+                    <mat-radio-button [value]="quantity">{{quantity}}</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="orderForm.get('quantity')!.invalid">quantity is invalid</mat-error>
+            </mat-form-field>
+        </ng-container>
+    </div>
+    <fieldset formGroupName="shipping">
+        <label>Shipping</label>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Street</mat-label>
+                <input matInput
+                       type="text"
+                       placeholder="Street"
+                       formControlName="shippingStreet"
+                       required>
+                <mat-error *ngIf="orderForm.get('shipping.shippingStreet')!.invalid">shippingStreet is
+                    invalid</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>House Number</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="House Number"
+                       formControlName="shippingHouseNumber"
+                       required>
+                <mat-error *ngIf="orderForm.get('shipping.shippingHouseNumber')!.invalid">shipping house number is
+                    invalid</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Zip Code</mat-label>
+                <input matInput
+                       type="text"
+                       placeholder="Zip Code"
+                       formControlName="shippingZipCode"
+                       required>
+                <mat-error *ngIf="orderForm.get('shipping.shippingZipCode')!.invalid">shipping zip code is
+                    invalid</mat-error></mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>City</mat-label>
+                <input matInput
+                       type="text"
+                       placeholder="City"
+                       formControlName="shippingCity"
+                       required><mat-error *ngIf="orderForm.get('shipping.shippingCity')!.invalid">shipping city is
+                    invalid</mat-error></mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>City</mat-label>
+                <mat-label>Choose an option</mat-label>
+                <div>
+                    <mat-label>Choose an option</mat-label>
+                    <div><mat-radio-group formControlName="shippingDeliveryTime">
+                            <mat-radio-button *ngFor="let item of deliveryTimeList$ | async"
+                                              [value]="item">{{item}}</mat-radio-button>
+                        </mat-radio-group></div>
+                </div>
+
+                <mat-error *ngIf="orderForm.get('shipping.shippingDeliveryTime')!.invalid">shipping city is
+                    invalid</mat-error>
+            </mat-form-field>
+        </div>
+    </fieldset>
+    <fieldset formGroupName="invoice">
+        <label>Invoice</label>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Address line</mat-label>
+                <input matInput
+                       matNativeControl
+                       type="string"
+                       placeholder="Address line"
+                       formControlName="invoiceAddressLine"
+                       required>
+                <mat-error *ngIf="orderForm.get('invoice.invoiceAddressLine')!.invalid">invoice address line is
+                    invalid</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <input matInput
+                       type="string"
+                       placeholder="Address Line"
+                       formControlName="invoiceAddressLine"
+                       required>
+                <mat-error *ngIf="orderForm.get('invoice.invoiceAddressLine')!.invalid">invoice address line is
+                    invalid</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <input matInput
+                       type="string"
+                       placeholder="Extra Address Line"
+                       formControlName="invoiceExtraAddressLine"
+                       required>
+                <mat-error *ngIf="orderForm.get('invoice.invoiceExtraAddressLine')!.invalid">invoice extra address line
+                    is
+                    invalid</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <input matInput
+                       type="string"
+                       placeholder="Extra Address Line"
+                       formControlName="invoiceExtraAddressLine"
+                       required>
+                <mat-error *ngIf="orderForm.get('invoice.invoiceExtraAddressLine')!.invalid">invoice extra address line
+                    is
+                    invalid</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <input matInput
+                       type="string"
+                       placeholder="Vat Number"
+                       formControlName="invoiceVatNumber"
+                       required>
+                <mat-error *ngIf="orderForm.get('invoice.invoiceVatNumber')!.invalid">
+                    invoice vat number is invalid
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill"
+                            *ngFor="let invoiceCountry of countryList$ | async">
+                <mat-label>Choose an option</mat-label>
+                <mat-select matSelect
+                            formControlName="invoiceCountry"
+                            required>
+                    <mat-option [value]="invoiceCountry.id">
+                        {{invoiceCountry.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="orderForm.get('invoice.invoiceCountry')!.invalid">
+                invoice country is invalid
+            </mat-error>
+        </div>
+    </fieldset>
+
+    <div><button type="submit"
+                mat-raised-button
+                color="primary"
+                [disabled]="orderForm.invalid">Submit</button></div>
+</form>
